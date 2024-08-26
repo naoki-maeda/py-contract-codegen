@@ -1,8 +1,13 @@
 import json
+import re
 
 import pytest
 
-from py_contract_codegen.modules.abi import ABIParser, ABITypeConverter
+from py_contract_codegen.modules.abi import (
+    ABIParser,
+    ABITypeConverter,
+    replace_keywords,
+)
 from py_contract_codegen.modules.enums import StateMutability
 from py_contract_codegen.modules.exceptions import (
     InvalidABIStructureError,
@@ -12,12 +17,27 @@ from py_contract_codegen.modules.exceptions import (
 
 
 @pytest.mark.parametrize(
+    "input_string, expected",
+    [
+        ('"true"', "True"),
+        ('"false"', "False"),
+        ('"null"', "None"),
+    ],
+)
+def test_replace_keywords(input_string, expected):
+    match = re.match(r'"(true|false|null)"', input_string)
+    assert replace_keywords(match) == expected
+
+
+@pytest.mark.parametrize(
     "abi_type,expected_python_type",
     [
         ("address", "ChecksumAddress"),
         ("bool", "bool"),
         ("uint256", "int"),
         ("int128", "int"),
+        ("fixed", "float"),
+        ("ufixed", "float"),
         ("bytes", "bytes"),
         ("bytes32", "bytes"),
         ("string", "str"),
@@ -33,13 +53,48 @@ from py_contract_codegen.modules.exceptions import (
             "(address,uint256,uint256[],(uint256,uint256)[])",
             "tuple[ChecksumAddress, int, list[int], list[tuple[int, int]]]",
         ),
+        ("any", "Any"),
     ],
 )
 def test_get_python_type(abi_type: str, expected_python_type: str):
     assert ABITypeConverter.get_python_type(abi_type) == expected_python_type
 
 
+def test_get_python_type_parse_error():
+    assert ABITypeConverter.get_python_type("invalid python type") == "Any"
+
+
+def test_convert_type_abi_error():
+    with pytest.raises(ValueError):
+        ABITypeConverter._convert_type("invalid python type")
+
+
 def test_abi_data_with_valid_function_abi():
+    abi_json = [
+        {
+            "type": "function",
+            "name": "balanceOf",
+            "constant": True,
+            "inputs": [{"name": "_account", "type": "address"}],
+            "outputs": [{"name": "", "type": "uint256"}],
+            "payable": False,
+            "stateMutability": "view",
+        }
+    ]
+
+    abi_data = ABIParser(abi=abi_json)
+
+    assert len(abi_data.functions) == 1
+    assert abi_data.functions[0]["name"] == "balanceOf"
+    assert abi_data.functions[0]["stateMutability"] == StateMutability.view
+    assert abi_data.functions[0]["converted_inputs"][0]["name"] == "_account"
+    assert (
+        abi_data.functions[0]["converted_inputs"][0]["python_type"] == "ChecksumAddress"
+    )
+    assert abi_data.functions[0]["converted_outputs"][0]["python_type"] == "int"
+
+
+def test_abi_data_with_valid_str_function_abi():
     abi_json = json.dumps(
         [
             {
