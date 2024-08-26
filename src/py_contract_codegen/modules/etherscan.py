@@ -6,6 +6,7 @@ from py_contract_codegen.modules.exceptions import EtherscanAPIError
 
 ETHERSCAN_BASE_URL = "https://api.etherscan.io/api"
 
+
 def get_url_by_network(network: Network) -> str:
     match network:
         case Network.mainnet:

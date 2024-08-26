@@ -3,6 +3,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, TypedDict
 
+from eth_abi.exceptions import ParseError
 from eth_abi.grammar import BasicType, TupleType, normalize, parse
 from eth_typing import ABIConstructor, ABIEvent, ABIFallback, ABIFunction, ABIReceive
 
@@ -46,7 +47,7 @@ class ABITypeConverter:
         try:
             normalized_type = parse(normalize(abi_type))
             return cls._convert_type(normalized_type)
-        except Exception:
+        except ParseError:
             return "Any"
 
     @classmethod
@@ -98,16 +99,6 @@ class ABITypeConverter:
         inner_types = [cls._convert_type(t) for t in tuple_type.components]
         return f"tuple[{', '.join(inner_types)}]"
 
-    @classmethod
-    def get_python_output_type(
-        cls, outputs: list[dict[str, str]]
-    ) -> type | tuple[type, ...] | str | None:
-        if not outputs:
-            return None
-        if len(outputs) == 1:
-            return cls.get_python_type(outputs[0]["type"])
-        return f"tuple[{', '.join([str(cls.get_python_type(o['type'])) for o in outputs])}]"
-
 
 class ABITypeConvertedComponent(TypedDict):
     name: str
@@ -155,8 +146,6 @@ class ABIParser:
         for item in self.content:
             if not isinstance(item, dict):
                 raise InvalidABIStructureError("Each ABI item must be a dictionary")
-            if "type" not in item:
-                raise InvalidABIStructureError("Each ABI item must have a 'type' field")
             try:
                 ABIType[item["type"]]
             except KeyError:
@@ -178,8 +167,6 @@ class ABIParser:
                     self.fallback = self._parse_fallback(item)
                 case ABIType.receive:
                     self.receive = self._parse_receive(item)
-                case _:
-                    raise UnknownABITypeError(f"Unknown ABI type: {abi_type}")
 
     def _parse_params(
         self, params: list[dict[str, Any]], prefix: str = "arg"
