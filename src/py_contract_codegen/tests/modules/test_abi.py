@@ -343,3 +343,40 @@ def test_abi_data_with_function_view():
     assert abi_data.functions[0]["converted_outputs"][0]["name"] == "output_1"
     assert abi_data.functions[0]["converted_outputs"][0]["python_type"] == "str"
     assert abi_data.functions[0]["stateMutability"] == "view"
+
+
+def test_abi_data_with_function_output_address():
+    abi_json = json.dumps(
+        [
+            {
+                "inputs": [
+                    {"internalType": "address", "name": "", "type": "address"},
+                    {"internalType": "address", "name": "", "type": "address"},
+                    {"internalType": "uint24", "name": "", "type": "uint24"},
+                ],
+                "name": "getPool",
+                "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+                "stateMutability": "view",
+                "type": "function",
+            }
+        ]
+    )
+
+    abi_data = ABIParser(abi=abi_json)
+    assert len(abi_data.functions) == 1
+    assert abi_data.functions[0]["name"] == "getPool"
+    assert len(abi_data.functions[0]["converted_inputs"]) == 3
+    assert len(abi_data.functions[0]["converted_outputs"]) == 1
+    assert abi_data.functions[0]["converted_inputs"][0]["name"] == "input_1"
+    assert (
+        abi_data.functions[0]["converted_inputs"][0]["python_type"] == "ChecksumAddress"
+    )
+    assert abi_data.functions[0]["converted_inputs"][1]["name"] == "input_2"
+    assert (
+        abi_data.functions[0]["converted_inputs"][1]["python_type"] == "ChecksumAddress"
+    )
+    assert abi_data.functions[0]["converted_inputs"][2]["name"] == "input_3"
+    assert abi_data.functions[0]["converted_inputs"][2]["python_type"] == "int"
+    assert abi_data.functions[0]["converted_outputs"][0]["name"] == "output_1"
+    assert abi_data.functions[0]["converted_outputs"][0]["python_type"] == "str"
+    assert abi_data.functions[0]["stateMutability"] == "view"
