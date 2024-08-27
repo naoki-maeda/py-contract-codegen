@@ -177,12 +177,21 @@ class ABIParser:
         for i, param in enumerate(params, start=1):
             if not param.get("name"):
                 param["name"] = f"{prefix}_{i}"
-            converted_abi_component = ABITypeConvertedComponent(
-                name=param["name"],
-                type=param["type"],
-                indexed=param.get("indexed", False),
-                python_type=ABITypeConverter.get_python_type(param["type"]),
-            )
+            # NOTE: type `address` is CheckSumAddress for input, but it becomes str for output.
+            if param["type"] == "address" and prefix == "output":
+                converted_abi_component = ABITypeConvertedComponent(
+                    name=param["name"],
+                    type=param["type"],
+                    indexed=param.get("indexed", False),
+                    python_type="str",
+                )
+            else:
+                converted_abi_component = ABITypeConvertedComponent(
+                    name=param["name"],
+                    type=param["type"],
+                    indexed=param.get("indexed", False),
+                    python_type=ABITypeConverter.get_python_type(param["type"]),
+                )
             converted_params.append(converted_abi_component)
         return converted_params
 

@@ -68,13 +68,13 @@ def test_gen_with_network(mock_get_abi, sample_abi):
     assert "def transfer" in result.stdout
 
 
-def test_gen_with_out_dir(tmp_path, sample_abi):
+def test_gen_with_out_file(tmp_path, sample_abi):
     abi_file = tmp_path / "sample.abi"
     abi_file.write_text(sample_abi)
     out_file = tmp_path / "output.py"
 
     result = runner.invoke(
-        app, ["gen", "--abi-path", str(abi_file), "--out-dir", str(out_file)]
+        app, ["gen", "--abi-path", str(abi_file), "--out-file", str(out_file)]
     )
     assert result.exit_code == 0
     assert "Generated code saved to" in result.stdout

@@ -36,8 +36,9 @@ def gen(
         None,
         help="Auto fetch abi from etherscan and generate code. Please set environment variable `ETHERSCAN_API_KEY`",
     ),
-    out_dir: Optional[Path] = typer.Option(
-        None, help="Path to save the generated code. If not provided, prints to stdout"
+    out_file: Optional[Path] = typer.Option(
+        None,
+        help="Path to save file name the generated code. If not provided, prints to stdout",
     ),
     class_name: Optional[str] = typer.Option(
         DEFAULT_CONTRACT_CLASS_NAME,
@@ -72,10 +73,10 @@ def gen(
         )
         generated_code = generator.generate()
 
-        if out_dir:
-            with out_dir.open("w") as f:
+        if out_file:
+            with out_file.open("w") as f:
                 f.write(generated_code)
-            typer.echo(f"Generated code saved to {out_dir}")
+            typer.echo(f"Generated code saved to {out_file}")
         else:
             typer.echo(generated_code)
 

@@ -34,5 +34,8 @@ jobs:
       - name: Run mypy
         run: uv run mypy .
 
-      - name: Run tests
-        run: uv run pytest
+      - name: Run tests with coverage
+        run: uv run pytest --cov=src/py_contract_codegen --cov-report=term-missing
+
+      - name: Run build
+        run: uvx --from build pyproject-build --installer uv
