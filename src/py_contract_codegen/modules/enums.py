@@ -1,8 +1,9 @@
 from enum import Enum, auto
 
 
-class TemplateName(str, Enum):
-    web3 = "web3"
+class TargetLib(str, Enum):
+    web3_v7 = "web3_v7"
+    web3_v6 = "web3_v6"
 
 
 class ABIType(Enum):
