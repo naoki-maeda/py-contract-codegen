@@ -192,7 +192,7 @@ def test_abi_data_with_event():
     assert len(abi_data.events) == 1
     event = abi_data.events[0]
     assert event["name"] == "Transfer"
-    assert event["converted_inputs"][0]["name"] == "from"
+    assert event["converted_inputs"][0]["name"] == "from_"
     assert event["converted_inputs"][0]["python_type"] == "ChecksumAddress"
     assert event["converted_inputs"][1]["name"] == "to"
     assert event["converted_inputs"][1]["python_type"] == "ChecksumAddress"

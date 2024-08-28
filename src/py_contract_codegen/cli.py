@@ -9,7 +9,7 @@ from py_contract_codegen.modules.code_generator import (
     DEFAULT_CONTRACT_CLASS_NAME,
     ContractCodeGenerator,
 )
-from py_contract_codegen.modules.enums import Network, TemplateName
+from py_contract_codegen.modules.enums import Network, TargetLib
 from py_contract_codegen.modules.etherscan import get_abi
 
 TEMPLATE_PATH = Path(__file__).resolve().parent / "template"
@@ -22,7 +22,7 @@ def version():
     """
     Show the version of the code generator.
     """
-    typer.echo("Python Contract Code Generator v0.1.0")
+    typer.echo("Python Contract Code Generator v0.1.1")
 
 
 @app.command()
@@ -44,9 +44,9 @@ def gen(
         DEFAULT_CONTRACT_CLASS_NAME,
         help="Contract Class Name to save the generated code. If not provided, use `GeneratedContract`",
     ),
-    template_name: Annotated[
-        TemplateName, typer.Option(help="Directory containing custom Jinja2 templates")
-    ] = TemplateName.web3,
+    target_lib: Annotated[
+        TargetLib, typer.Option(help="Target library and version")
+    ] = TargetLib.web3_v7,
     network: Annotated[
         Network, typer.Option(help="Ethereum network for fetching ABI")
     ] = Network.mainnet,
@@ -69,7 +69,7 @@ def gen(
             abi_content=abi_content,
             template_path=TEMPLATE_PATH,
             contract_class_name=class_name,
-            template_name=template_name,
+            target_lib=target_lib,
         )
         generated_code = generator.generate()
 

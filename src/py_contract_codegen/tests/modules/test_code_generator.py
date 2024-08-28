@@ -5,7 +5,6 @@ from jinja2 import TemplateNotFound
 from py_contract_codegen.modules.code_generator import ContractCodeGenerator
 
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent.parent / "template"
-TEMPLATE_NAME = "contract.web3.jinja2"
 
 
 def test_py_contract_codegen_with_valid_abi():
