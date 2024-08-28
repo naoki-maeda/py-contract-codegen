@@ -507,7 +507,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Issue().get_logs(
+        return self.contract.events.Issue().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -521,7 +521,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Redeem().get_logs(
+        return self.contract.events.Redeem().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -535,7 +535,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Deprecate().get_logs(
+        return self.contract.events.Deprecate().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -549,7 +549,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Params().get_logs(
+        return self.contract.events.Params().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -563,7 +563,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.DestroyedBlackFunds().get_logs(
+        return self.contract.events.DestroyedBlackFunds().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -577,7 +577,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.AddedBlackList().get_logs(
+        return self.contract.events.AddedBlackList().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -591,7 +591,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.RemovedBlackList().get_logs(
+        return self.contract.events.RemovedBlackList().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -605,7 +605,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Approval().get_logs(
+        return self.contract.events.Approval().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -619,7 +619,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Transfer().get_logs(
+        return self.contract.events.Transfer().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -633,7 +633,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Pause().get_logs(
+        return self.contract.events.Pause().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -647,7 +647,7 @@ class USDTContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Unpause().get_logs(
+        return self.contract.events.Unpause().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,

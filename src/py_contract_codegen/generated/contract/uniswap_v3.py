@@ -191,7 +191,7 @@ class UniswapV3Contract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.FeeAmountEnabled().get_logs(
+        return self.contract.events.FeeAmountEnabled().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -205,7 +205,7 @@ class UniswapV3Contract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.OwnerChanged().get_logs(
+        return self.contract.events.OwnerChanged().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -219,7 +219,7 @@ class UniswapV3Contract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.PoolCreated().get_logs(
+        return self.contract.events.PoolCreated().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,

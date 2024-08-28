@@ -853,7 +853,7 @@ class CryptoKittiesContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Pregnant().get_logs(
+        return self.contract.events.Pregnant().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -867,7 +867,7 @@ class CryptoKittiesContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Transfer().get_logs(
+        return self.contract.events.Transfer().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -881,7 +881,7 @@ class CryptoKittiesContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Approval().get_logs(
+        return self.contract.events.Approval().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -895,7 +895,7 @@ class CryptoKittiesContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.Birth().get_logs(
+        return self.contract.events.Birth().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
@@ -909,7 +909,7 @@ class CryptoKittiesContract:
         to_block: BlockIdentifier | None = None,
         block_hash: HexBytes | None = None,
     ) -> Iterable[EventData]:
-        return self.contract.events.ContractUpgrade().get_logs(
+        return self.contract.events.ContractUpgrade().get_logs(  # type: ignore[attr-defined]
             argument_filters=argument_filters,
             from_block=from_block,
             to_block=to_block,
