@@ -1,4 +1,5 @@
 import json
+from keyword import kwlist
 import re
 from dataclasses import dataclass, field
 from typing import Any, TypedDict
@@ -175,19 +176,22 @@ class ABIParser:
             return []
         converted_params = []
         for i, param in enumerate(params, start=1):
-            if not param.get("name"):
-                param["name"] = f"{prefix}_{i}"
+            name = param.get("name")
+            # check Python Reserved Keywords
+            name = f"{name}_" if name in kwlist else name
+            if not name:
+                name = f"{prefix}_{i}"
             # NOTE: type `address` is CheckSumAddress for input, but it becomes str for output.
             if param["type"] == "address" and prefix == "output":
                 converted_abi_component = ABITypeConvertedComponent(
-                    name=param["name"],
+                    name=name,
                     type=param["type"],
                     indexed=param.get("indexed", False),
                     python_type="str",
                 )
             else:
                 converted_abi_component = ABITypeConvertedComponent(
-                    name=param["name"],
+                    name=name,
                     type=param["type"],
                     indexed=param.get("indexed", False),
                     python_type=ABITypeConverter.get_python_type(param["type"]),
