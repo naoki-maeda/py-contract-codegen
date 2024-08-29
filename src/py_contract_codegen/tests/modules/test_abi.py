@@ -65,7 +65,7 @@ def test_get_python_type_parse_error():
 
 
 def test_convert_type_abi_error():
-    with pytest.raises(ValueError):
+    with pytest.raises(UnknownABITypeError):
         ABITypeConverter._convert_type("invalid python type")
 
 
@@ -163,12 +163,13 @@ def test_abi_data_with_constructor():
 
     abi_data = ABIParser(abi=abi_json)
 
-    assert abi_data.constructor is not None
-    assert abi_data.constructor["converted_inputs"][0]["name"] == "_account"
+    assert len(abi_data.constructors) == 1
+    assert abi_data.constructors[0]["converted_inputs"][0]["name"] == "_account"
     assert (
-        abi_data.constructor["converted_inputs"][0]["python_type"] == "ChecksumAddress"
+        abi_data.constructors[0]["converted_inputs"][0]["python_type"]
+        == "ChecksumAddress"
     )
-    assert abi_data.constructor["stateMutability"] == StateMutability.nonpayable
+    assert abi_data.constructors[0]["stateMutability"] == StateMutability.nonpayable
 
 
 def test_abi_data_with_event():
@@ -205,8 +206,8 @@ def test_abi_data_with_fallback():
 
     abi_data = ABIParser(abi=abi_json)
 
-    assert abi_data.fallback is not None
-    assert abi_data.fallback["stateMutability"] == StateMutability.payable
+    assert len(abi_data.fallbacks) == 1
+    assert abi_data.fallbacks[0]["stateMutability"] == StateMutability.payable
 
 
 def test_abi_data_with_receive():
@@ -214,8 +215,27 @@ def test_abi_data_with_receive():
 
     abi_data = ABIParser(abi=abi_json)
 
-    assert abi_data.receive is not None
-    assert abi_data.receive["stateMutability"] == StateMutability.payable
+    assert len(abi_data.receives) == 1
+    assert abi_data.receives[0]["stateMutability"] == StateMutability.payable
+
+
+def test_abi_data_with_error():
+    abi_json = json.dumps(
+        [
+            {
+                "inputs": [
+                    {"internalType": "address", "name": "authority", "type": "address"}
+                ],
+                "name": "AccessManagedInvalidAuthority",
+                "type": "error",
+            }
+        ]
+    )
+
+    abi_data = ABIParser(abi=abi_json)
+    assert len(abi_data.errors) == 1
+    assert abi_data.errors[0]["type"] == "error"
+    assert abi_data.errors[0]["name"] == "AccessManagedInvalidAuthority"
 
 
 def test_abi_data_with_function_no_inputs():

@@ -1,12 +1,19 @@
 import json
-from keyword import kwlist
 import re
 from dataclasses import dataclass, field
+from keyword import kwlist
 from typing import Any, TypedDict
 
 from eth_abi.exceptions import ParseError
 from eth_abi.grammar import BasicType, TupleType, normalize, parse
-from eth_typing import ABIConstructor, ABIEvent, ABIFallback, ABIFunction, ABIReceive
+from eth_typing import (
+    ABIConstructor,
+    ABIError,
+    ABIEvent,
+    ABIFallback,
+    ABIFunction,
+    ABIReceive,
+)
 
 from py_contract_codegen.modules.enums import ABIType
 from py_contract_codegen.modules.exceptions import (
@@ -58,7 +65,7 @@ class ABITypeConverter:
         elif isinstance(abi_type, TupleType):
             return cls._convert_tuple_type(abi_type)
         else:
-            raise ValueError(f"Unknown ABI type: {abi_type}")
+            raise UnknownABITypeError(f"Unknown ABI type: {abi_type}")
 
     @classmethod
     def _convert_basic_type(cls, basic_type: BasicType) -> str:
@@ -128,9 +135,10 @@ class ABIParser:
     formatted_content: str = ""
     functions: list[ABITypedFunction] = field(default_factory=list)
     events: list[ABITypedEvent] = field(default_factory=list)
-    constructor: ABITypedConstructor | None = None
-    fallback: ABIFallback | None = None
-    receive: ABIReceive | None = None
+    constructors: list[ABITypedConstructor] = field(default_factory=list)
+    fallbacks: list[ABIFallback] = field(default_factory=list)
+    receives: list[ABIReceive] = field(default_factory=list)
+    errors: list[ABIError] = field(default_factory=list)
 
     def __post_init__(self):
         self.validate()
@@ -163,11 +171,13 @@ class ABIParser:
                 case ABIType.event:
                     self.events.append(self._parse_event(item))
                 case ABIType.constructor:
-                    self.constructor = self._parse_constructor(item)
+                    self.constructors.append(self._parse_constructor(item))
                 case ABIType.fallback:
-                    self.fallback = self._parse_fallback(item)
+                    self.fallbacks.append(self._parse_fallback(item))
                 case ABIType.receive:
-                    self.receive = self._parse_receive(item)
+                    self.receives.append(self._parse_receive(item))
+                case ABIType.error:
+                    self.errors.append(self._parse_error(item))
 
     def _parse_params(
         self, params: list[dict[str, Any]], prefix: str = "arg"
@@ -237,4 +247,11 @@ class ABIParser:
         return ABIReceive(
             type=receive["type"],
             stateMutability=receive.get("stateMutability", "payable"),
+        )
+
+    def _parse_error(self, error: dict[str, Any]) -> ABIError:
+        return ABIError(
+            type=error["type"],
+            name=error["name"],
+            inputs=error.get("inputs", []),
         )
