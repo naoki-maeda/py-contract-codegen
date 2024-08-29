@@ -22,7 +22,7 @@ def version():
     """
     Show the version of the code generator.
     """
-    typer.echo("Python Contract Code Generator v0.1.1")
+    typer.echo("Python Contract Code Generator v0.1.2")
 
 
 @app.command()
