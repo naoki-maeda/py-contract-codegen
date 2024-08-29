@@ -12,6 +12,7 @@ class ABIType(Enum):
     constructor = auto()
     fallback = auto()
     receive = auto()
+    error = auto()
 
 
 class StateMutability(str, Enum):
