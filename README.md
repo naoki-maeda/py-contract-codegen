@@ -90,8 +90,8 @@ transfer = contract.transfer(to_address, 1)
 nonce = w3.eth.get_transaction_count(account.address)
 build_tx = transfer.build_transaction({"from": account.address, "nonce": nonce})
 signed_tx = account.sign_transaction(build_tx)
-tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
-web3.eth.wait_for_transaction_receipt(tx_hash)
+tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+w3.eth.wait_for_transaction_receipt(tx_hash)
 ```
 
 ### License
