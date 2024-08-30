@@ -14,7 +14,7 @@ attrs==24.2.0
     # via aiohttp
 bitarray==2.9.2
     # via eth-account
-certifi==2024.7.4
+certifi==2024.8.30
     # via
     #   httpcore
     #   httpx
