@@ -74,7 +74,7 @@ hexbytes==1.2.1
     #   web3
 httpcore==1.0.5
     # via httpx
-httpx==0.27.0
+httpx==0.27.2
     # via py-contract-codegen (pyproject.toml)
 idna==3.8
     # via
