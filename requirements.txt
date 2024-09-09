@@ -104,7 +104,7 @@ pydantic==2.8.2
     # via
     #   eth-account
     #   web3
-pydantic-core==2.23.1
+pydantic-core==2.23.3
     # via pydantic
 pygments==2.18.0
     # via rich
