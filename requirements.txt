@@ -21,7 +21,7 @@ certifi==2024.8.30
     #   requests
 charset-normalizer==3.3.2
     # via requests
-ckzg==2.0.0
+ckzg==2.0.1
     # via eth-account
 click==8.1.7
     # via typer
