@@ -139,7 +139,7 @@ typing-extensions==4.12.2
     #   pydantic-core
     #   typer
     #   web3
-urllib3==2.2.2
+urllib3==2.2.3
     # via
     #   requests
     #   types-requests
