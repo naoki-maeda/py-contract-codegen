@@ -110,7 +110,7 @@ pygments==2.18.0
     # via rich
 pyunormalize==15.1.0
     # via web3
-regex==2024.7.24
+regex==2024.9.11
     # via parsimonious
 requests==2.32.3
     # via web3
