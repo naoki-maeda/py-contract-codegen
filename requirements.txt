@@ -130,7 +130,7 @@ toolz==0.12.1
     # via cytoolz
 typer==0.12.5
     # via py-contract-codegen (pyproject.toml)
-types-requests==2.32.0.20240907
+types-requests==2.32.0.20240914
     # via web3
 typing-extensions==4.12.2
     # via
