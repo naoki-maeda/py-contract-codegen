@@ -145,7 +145,7 @@ urllib3==2.2.3
     #   types-requests
 web3==7.2.0
     # via py-contract-codegen (pyproject.toml)
-websockets==13.0.1
+websockets==13.1
     # via web3
 yarl==1.11.1
     # via aiohttp
