@@ -100,7 +100,7 @@ pycryptodome==3.20.0
     # via
     #   eth-hash
     #   eth-keyfile
-pydantic==2.9.1
+pydantic==2.9.2
     # via
     #   eth-account
     #   web3
