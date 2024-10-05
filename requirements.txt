@@ -108,7 +108,7 @@ pydantic-core==2.24.0
     # via pydantic
 pygments==2.18.0
     # via rich
-pyunormalize==15.1.0
+pyunormalize==16.0.0
     # via web3
 regex==2024.9.11
     # via parsimonious
