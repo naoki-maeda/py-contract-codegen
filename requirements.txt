@@ -72,7 +72,7 @@ hexbytes==1.2.1
     #   eth-rlp
     #   eth-utils
     #   web3
-httpcore==1.0.5
+httpcore==1.0.6
     # via httpx
 httpx==0.27.2
     # via py-contract-codegen (pyproject.toml)
