@@ -96,7 +96,7 @@ multidict==6.1.0
     #   yarl
 parsimonious==0.10.0
     # via eth-abi
-pycryptodome==3.20.0
+pycryptodome==3.21.0
     # via
     #   eth-hash
     #   eth-keyfile
