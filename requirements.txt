@@ -114,7 +114,7 @@ regex==2024.9.11
     # via parsimonious
 requests==2.32.3
     # via web3
-rich==13.8.1
+rich==13.9.2
     # via typer
 rlp==4.0.1
     # via
