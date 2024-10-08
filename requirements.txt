@@ -126,7 +126,7 @@ sniffio==1.3.1
     # via
     #   anyio
     #   httpx
-toolz==0.12.1
+toolz==1.0.0
     # via cytoolz
 typer==0.12.5
     # via py-contract-codegen (pyproject.toml)
