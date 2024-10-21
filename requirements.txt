@@ -45,7 +45,7 @@ eth-keys==0.5.1
     #   eth-keyfile
 eth-rlp==2.1.0
     # via eth-account
-eth-typing==5.0.0
+eth-typing==5.0.1
     # via
     #   eth-abi
     #   eth-keys
