@@ -39,7 +39,7 @@ eth-hash==0.7.0
     #   web3
 eth-keyfile==0.8.1
     # via eth-account
-eth-keys==0.5.1
+eth-keys==0.6.0
     # via
     #   eth-account
     #   eth-keyfile
