@@ -12,7 +12,7 @@ anyio==4.6.0
     # via httpx
 attrs==24.2.0
     # via aiohttp
-bitarray==2.9.2
+bitarray==3.0.0
     # via eth-account
 certifi==2024.8.30
     # via
