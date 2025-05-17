@@ -130,7 +130,7 @@ class ABITypedConstructor(ABIConstructor):
 
 @dataclass
 class ABIParser:
-    abi: str
+    abi: str | list[dict[str, Any]]
     content: list[dict[str, Any]] = field(default_factory=list)
     formatted_content: str = ""
     functions: list[ABITypedFunction] = field(default_factory=list)

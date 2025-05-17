@@ -66,10 +66,35 @@ def test_get_python_type_parse_error():
 
 def test_convert_type_abi_error():
     with pytest.raises(UnknownABITypeError):
-        ABITypeConverter._convert_type("invalid python type")
+        ABITypeConverter._convert_type("invalid api type")  # type: ignore[arg-type]
 
 
 def test_abi_data_with_valid_function_abi():
+    abi_json = [
+        {
+            "type": "function",
+            "name": "balanceOf",
+            "constant": True,
+            "inputs": [{"name": "_account", "type": "address"}],
+            "outputs": [{"name": "", "type": "uint256"}],
+            "payable": False,
+            "stateMutability": "view",
+        }
+    ]
+
+    abi_data = ABIParser(abi=json.dumps(abi_json))
+
+    assert len(abi_data.functions) == 1
+    assert abi_data.functions[0]["name"] == "balanceOf"
+    assert abi_data.functions[0]["stateMutability"] == StateMutability.view
+    assert abi_data.functions[0]["converted_inputs"][0]["name"] == "_account"
+    assert (
+        abi_data.functions[0]["converted_inputs"][0]["python_type"] == "ChecksumAddress"
+    )
+    assert abi_data.functions[0]["converted_outputs"][0]["python_type"] == "int"
+
+
+def test_abi_list_data_with_valid_function_abi():
     abi_json = [
         {
             "type": "function",
