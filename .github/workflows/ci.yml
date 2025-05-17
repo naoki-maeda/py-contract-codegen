@@ -31,8 +31,8 @@ jobs:
       - name: Run lint
         run: uv run ruff check .
 
-      - name: Run mypy
-        run: uv run mypy .
+      - name: Run ty
+        run: uv run ty check
 
       - name: Run tests with coverage
         run: uv run pytest --cov=src/py_contract_codegen --cov-report=term-missing

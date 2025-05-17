@@ -1,16 +1,18 @@
-import pytest
 from unittest.mock import patch
+
 import httpx
+import pytest
+
 from py_contract_codegen.modules.enums import Network
+from py_contract_codegen.modules.etherscan import get_abi, get_url_by_network
 from py_contract_codegen.modules.exceptions import EtherscanAPIError
-from py_contract_codegen.modules.etherscan import get_url_by_network, get_abi
 
 
 def test_get_url_by_network():
     assert get_url_by_network(Network.mainnet) == "https://api.etherscan.io/api"
     assert get_url_by_network(Network.sepolia) == "https://api-sepolia.etherscan.io/api"
     with pytest.raises(ValueError):
-        get_url_by_network("invalid_network")
+        get_url_by_network("invalid_network")  # type: ignore[call-arg]
 
 
 @pytest.mark.parametrize(
